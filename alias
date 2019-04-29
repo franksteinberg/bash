@@ -89,3 +89,19 @@ alias notes='vim ~/notes.txt'
 alias speedtest=~/speedtest
 alias utime='sudo ntpdate pool.ntp.org'
 alias sshlogin='ssh -i ~/sshkey/saket.txt saket@cseproj83.cse.iitk.ac.in'
+
+# [luxafor light]
+alias lux-strobe="fabufor --led all --strobe --repeat 0 --time 255 --color";
+alias lux-911="fabufor --pattern 5 --repeat 0";
+alias lux-away="fabufor --led all --strobe --repeat 0 --time 255 --color DarkRed";
+alias lux-available="fabufor --led all --strobe --repeat 0 --time 255 --color LimeGreen";
+
+# Bash Alias/RC editing
+alias ea='vim ~/.bash/alias'
+alias erc='vim ~/.bashrc'
+alias sa='source ~/.bashrc && echo ".bashrc sourced. OK"'
+
+# Navigation
+alias cdh='cd ~'
+alias cdpp='cd ~/source/src'
+
