@@ -20,6 +20,8 @@ alias sa='source ~/.bashrc && echo ".bashrc sourced. OK"'
 # Navigation
 alias cdh='cd ~'
 alias cdc='cd ~/Code'
+alias cdb='cd ~/Code/FutureFuel/ff/backend'
+alias cdf='cd ~/Code/FutureFuel/ff/frontend'
 
 # FutureFuel VPN connection
 alias vpnon='sudo openvpn --config ~/Documents/futurefuel-vpn-client-certificate.ovpn --auth-user-pass'
