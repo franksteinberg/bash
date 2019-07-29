@@ -1,7 +1,7 @@
 # Custom Bash Config
 Original config from: https://github.com/jaivardhankapoor/bestbash
 
-###Functions
+## Functions
 Custom commands for super lazy people ;)
 
 1. up:go up the directory structure specified number of times
@@ -17,7 +17,7 @@ Custom commands for super lazy people ;)
 1. dirsize: Self explanatory
 1. fared: find and remove all empty directories
 
-##Configuration Instructions
+## Configuration Instructions
   ```
   #clone into home
   git clone https://github.com/franksteinberg/bash ~/.bash/
@@ -28,7 +28,7 @@ Custom commands for super lazy people ;)
   #ALL DONE!
  ```
  
- ## Making Changes to aliases
+## Making Changes to aliases
 1. If you make changes to any of the files, just type `sa` to source aliases
  * It actually sources `.bashrc`, but I am used to typing `ea` and `sa` to edit/source my aliases.
 1. The bash prompt is defined in `.bash/colors` - Edit this file to change the prompt to your liking
