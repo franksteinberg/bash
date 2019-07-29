@@ -21,3 +21,78 @@ alias sa='source ~/.bashrc && echo ".bashrc sourced. OK"'
 alias cdh='cd ~'
 alias cdc='cd ~/Code'
 
+# FutureFuel VPN connection
+alias vpnon='sudo openvpn --config ~/Documents/futurefuel-vpn-client-certificate.ovpn --auth-user-pass'
+
+# List remote repositories for a project
+alias rv='git remote -v'
+
+#--------------------------------------------
+# PHPUnit & Phing commands- run in project root:
+#--------------------------------------------
+function pu {
+  ./vendor/bin/phpunit $@;
+  return;
+}
+
+function dpu {
+  docker-compose exec fpm ./vendor/bin/phpunit $@;
+  return;
+}
+
+# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
+
+
+# Will run phpunit with filter
+# Usage: "puf SomeSearchTerm" where SomeSearchTerm is the beginning of some test class or test method
+function puf {
+  ./vendor/bin/phpunit --filter $@;
+  return;
+}
+
+function dpuf {
+  docker-compose exec fpm ./vendor/bin/phpunit --filter $@;
+  return;
+}
+
+# Will run phpunit with code coverage
+function puc {
+  ./vendor/bin/phpunit --stop-on-failure --coverage-html reports-full $@;
+  return;
+}
+
+function dpuc {
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation $@;
+  return;
+}
+
+
+# Will run phpunit with filter and code coverage
+function pucf {
+  ./vendor/bin/phpunit --stop-on-failure --coverage-html reports --filter $@;
+  return;
+}
+
+function dpucf {
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter $@;
+  return;
+}
+
+
+# Create a new branch from upstream/master. Must provide a branch name as the first argument.
+newticket() {
+    git remote update;
+  # UNCOMMENT THESE LINES IF BRANCHING OFF rc or master instead of develop
+  #  rcHash=$(git rev-parse --verify --quiet origin/rc)
+  #  
+  #  if [ "${#rcHash}" -gt 0 ]; then
+  #      upstreamBranch="rc"
+  #  else
+  #      upstreamBranch="master"
+  #  fi
+  #
+  #  git checkout -b $1 origin/$upstreamBranch;
+    git checkout -b $1 origin/develop;
+    git push -u origin $1
+}
+
