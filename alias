@@ -37,12 +37,32 @@ function pu {
   return;
 }
 
+function dd {
+  docker-compose down;
+  return;
+}
+
+function dub {
+  docker-compose up --build;
+  return;
+}
+
+function dpa {
+  docker-compose exec fpm php artisan $@;
+  return;
+}
+
+function dpamfs {
+  docker-compose exec fpm php artisan migrate:fresh --seed $@;
+  return;
+}
+
 function dpu {
   docker-compose exec fpm ./vendor/bin/phpunit $@;
   return;
 }
 
-# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
+# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
 
 
 # Will run phpunit with filter
@@ -53,7 +73,12 @@ function puf {
 }
 
 function dpuf {
-  docker-compose exec fpm ./vendor/bin/phpunit --filter $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --filter $@;
+  return;
+}
+
+function dpug {
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --group $@;
   return;
 }
 
@@ -64,7 +89,7 @@ function puc {
 }
 
 function dpuc {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation $@;
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $@;
   return;
 }
 
@@ -76,17 +101,22 @@ function pucf {
 }
 
 function dpucf {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter $@;
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter $@;
+  return;
+}
+
+function dpucg {
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --group $@;
   return;
 }
 
 
-# Create a new branch from upstream/master. Must provide a branch name as the first argument.
+# Create a new branch from upstream/develop. Must provide a branch name as the first argument.
 newticket() {
     git remote update;
   # UNCOMMENT THESE LINES IF BRANCHING OFF rc or master instead of develop
   #  rcHash=$(git rev-parse --verify --quiet origin/rc)
-  #  
+  #
   #  if [ "${#rcHash}" -gt 0 ]; then
   #      upstreamBranch="rc"
   #  else
