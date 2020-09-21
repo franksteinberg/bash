@@ -47,6 +47,16 @@ function dub {
   return;
 }
 
+function dpa {
+  docker-compose exec fpm php artisan $@;
+  return;
+}
+
+function dpamfs {
+  docker-compose exec fpm php artisan migrate:fresh --seed $@;
+  return;
+}
+
 function dpu {
   docker-compose exec fpm ./vendor/bin/phpunit $@;
   return;
