@@ -73,7 +73,12 @@ function puf {
 }
 
 function dpuf {
-  docker-compose exec fpm ./vendor/bin/phpunit --filter $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --filter $@;
+  return;
+}
+
+function dpug {
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --group $@;
   return;
 }
 
@@ -100,6 +105,10 @@ function dpucf {
   return;
 }
 
+function dpucg {
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --group $@;
+  return;
+}
 
 
 # Create a new branch from upstream/develop. Must provide a branch name as the first argument.
