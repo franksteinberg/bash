@@ -81,12 +81,13 @@ function dpucf {
 }
 
 
-# Create a new branch from upstream/master. Must provide a branch name as the first argument.
+
+# Create a new branch from upstream/develop. Must provide a branch name as the first argument.
 newticket() {
     git remote update;
   # UNCOMMENT THESE LINES IF BRANCHING OFF rc or master instead of develop
   #  rcHash=$(git rev-parse --verify --quiet origin/rc)
-  #  
+  #
   #  if [ "${#rcHash}" -gt 0 ]; then
   #      upstreamBranch="rc"
   #  else
