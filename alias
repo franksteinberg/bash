@@ -42,7 +42,7 @@ function dpu {
   return;
 }
 
-# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
+# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
 
 
 # Will run phpunit with filter
@@ -64,7 +64,7 @@ function puc {
 }
 
 function dpuc {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation $@;
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $@;
   return;
 }
 
@@ -76,7 +76,7 @@ function pucf {
 }
 
 function dpucf {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter $@;
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter $@;
   return;
 }
 
