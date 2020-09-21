@@ -37,6 +37,16 @@ function pu {
   return;
 }
 
+function dd {
+  docker-compose down;
+  return;
+}
+
+function dub {
+  docker-compose up --build;
+  return;
+}
+
 function dpu {
   docker-compose exec fpm ./vendor/bin/phpunit $@;
   return;
