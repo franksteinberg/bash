@@ -37,8 +37,20 @@ function pu {
   return;
 }
 
+# function dpu {
+#   docker-compose exec fpm ./vendor/bin/phpunit $@;
+#   return;
+# }
+
 function dpu {
-  docker-compose exec fpm ./vendor/bin/phpunit $@;
+  if [[ $@ =~ --all ]]; then
+    ARGUMENT_STRING="${@//--all/}"
+  else
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slowTests $@;
+    return;
+  fi
+
+  docker-compose exec fpm ./vendor/bin/phpunit $ARGUMENT_STRING;
   return;
 }
 
@@ -53,7 +65,14 @@ function puf {
 }
 
 function dpuf {
-  docker-compose exec fpm ./vendor/bin/phpunit --filter $@;
+  if [[ $@ =~ --all ]]; then
+    ARGUMENT_STRING="${@//--all/}"
+  else
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slowTests  --filter $@;
+    return;
+  fi
+
+  docker-compose exec fpm ./vendor/bin/phpunit --filter $ARGUMENT_STRING;
   return;
 }
 
@@ -64,7 +83,14 @@ function puc {
 }
 
 function dpuc {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation $@;
+  if [[ $@ =~ --all ]]; then
+    ARGUMENT_STRING="${@//--all/}"
+  else
+    docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --exclude-group slowTests $@;
+    return;
+  fi
+
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $ARGUMENT_STRING;
   return;
 }
 
@@ -76,7 +102,7 @@ function pucf {
 }
 
 function dpucf {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter $@;
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter $@;
   return;
 }
 
@@ -96,5 +122,10 @@ newticket() {
   #  git checkout -b $1 origin/$upstreamBranch;
     git checkout -b $1 origin/develop;
     git push -u origin $1
+}
+
+function pa {
+  php artisan $@;
+  return;
 }
 
