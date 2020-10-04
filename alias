@@ -14,8 +14,9 @@ alias lm='la | less'
 
 # Bash Alias/RC editing
 alias ea='vim ~/.bash/alias'
+alias zrc='vim ~/.zshrc'
 alias erc='vim ~/.bashrc'
-alias sa='source ~/.bashrc && echo ".bashrc sourced. OK"'
+alias sa='source ~/.bash/alias && echo "~/bash/alias sourced. OK"'
 
 # Navigation
 alias cdh='cd ~'
@@ -28,6 +29,8 @@ alias vpnon='sudo openvpn --config ~/Documents/futurefuel-vpn-client-certificate
 
 # List remote repositories for a project
 alias rv='git remote -v'
+
+alias nah='git reset --hard && git clean -df'
 
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
