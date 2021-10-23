@@ -32,6 +32,17 @@ alias rv='git remote -v'
 
 alias nah='git reset --hard && git clean -df'
 
+
+function tinker()
+{
+  if [ -z "$1" ]
+    then
+      docker-compose exec fpm php artisan tinker
+    else
+      docker-compose exec fpm php artisan tinker --execute="dd($1);"
+  fi
+}
+
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
 #--------------------------------------------
