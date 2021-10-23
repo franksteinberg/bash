@@ -32,6 +32,7 @@ alias rv='git remote -v'
 
 alias nah='git reset --hard && git clean -df'
 
+alias tink='docker-compose exec fpm php artisan tinker'
 
 function tinker()
 {
