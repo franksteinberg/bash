@@ -49,7 +49,7 @@ function dpu {
   if [[ $@ =~ --all ]]; then
     ARGUMENT_STRING="${@//--all/}"
   else
-    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slowTests $@;
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow $@;
     return;
   fi
 
@@ -71,7 +71,7 @@ function dpuf {
   if [[ $@ =~ --all ]]; then
     ARGUMENT_STRING="${@//--all/}"
   else
-    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slowTests  --filter $@;
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow --filter $@;
     return;
   fi
 
@@ -89,7 +89,7 @@ function dpuc {
   if [[ $@ =~ --all ]]; then
     ARGUMENT_STRING="${@//--all/}"
   else
-    docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --exclude-group slowTests $@;
+    docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --exclude-group slow $@;
     return;
   fi
 
