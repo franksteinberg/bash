@@ -44,6 +44,8 @@ function tinker()
   fi
 }
 
+alias phpcs='./vendor/bin/phpcs --standard=./custom_ruleset.xml --severity=1'
+
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
 #--------------------------------------------
