@@ -44,7 +44,7 @@ function tinker()
   fi
 }
 
-alias phpcs='./vendor/bin/phpcs --standard=./custom_ruleset.xml --severity=1'
+alias phpcs='docker-compose exec fpm ./vendor/bin/phpcs --standard=./custom_ruleset.xml --severity=1 -s'
 
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
@@ -126,7 +126,8 @@ function dpucf {
 # Generate a new seed.sql file
 alias generate-seed-sql="docker-compose exec -T fpm sed 's/DB_DATABASE=futurefuel/DB_DATABASE=futurefuel_fresh_seed/' .env > .env.seed && docker-compose exec -T db /usr/bin/mysql -u root --password=root -e 'drop database if exists futurefuel_fresh_seed; create database futurefuel_fresh_seed;' && docker-compose exec fpm php artisan migrate:fresh --env=seed && docker-compose exec -T db /usr/bin/mysqldump -u root --password=root futurefuel_fresh_seed > ../services/payments/src/test/resources/seed.sql"
 
-alias newseed="cd ~/Code/FutureFuel/ff/services/payments/ && ./seed.sh && cd ../../backend"
+# alias newseed="cd ~/Code/FutureFuel/ff/services/payments/ && ./seed.sh && cd ../../backend"
+alias newseed="cd ~/Code/FutureFuel/ff/services/payments_v2/scripts && ./seed.sh && cd ../../../backend"
 
 # Create a new branch from upstream/master. Must provide a branch name as the first argument.
 newticket() {
