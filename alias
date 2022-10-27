@@ -154,3 +154,7 @@ function dpa {
   docker-compose exec fpm php artisan $@;
 }
 
+function dc {
+  docker-compose $@;
+}
+
