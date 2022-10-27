@@ -150,3 +150,7 @@ function pa {
   return;
 }
 
+function dpa {
+  docker-compose exec fpm php artisan $@;
+}
+
