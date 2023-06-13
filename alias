@@ -166,4 +166,3 @@ function dc {
 function dcef {
   docker-compose exec fpm $@;
 }
-
