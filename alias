@@ -56,10 +56,25 @@ function pu {
   return;
 }
 
-# function dpu {
-#   docker-compose exec fpm ./vendor/bin/phpunit $@;
-#   return;
-# }
+function dd {
+  docker-compose down;
+  return;
+}
+
+function dub {
+  docker-compose up --build;
+  return;
+}
+
+function dpa {
+  docker-compose exec fpm php artisan $@;
+  return;
+}
+
+function dpamfs {
+  docker-compose exec fpm php artisan migrate:fresh --seed $@;
+  return;
+}
 
 function dpu {
   if [[ $@ =~ --all ]]; then
@@ -73,7 +88,7 @@ function dpu {
   return;
 }
 
-# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --process-isolation --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
+# docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter test_if_unsubscribing_an_email_that_does_not_have_a_matching_password_reset_it_gives_a_success_response_but_does_not_change_database
 
 
 # Will run phpunit with filter
@@ -84,14 +99,12 @@ function puf {
 }
 
 function dpuf {
-  if [[ $@ =~ --all ]]; then
-    ARGUMENT_STRING="${@//--all/}"
-  else
-    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow --filter $@;
-    return;
-  fi
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --filter $@;
+  return;
+}
 
-  docker-compose exec fpm ./vendor/bin/phpunit --filter $ARGUMENT_STRING;
+function dpug {
+  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --group $@;
   return;
 }
 
@@ -125,6 +138,11 @@ function dpucf {
   return;
 }
 
+function dpucg {
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --group $@;
+  return;
+}
+
 # Run tests in parallel
 alias test='docker-compose exec fpm php artisan test -p10 --parallel --recreate-databases --runner WrapperRunner -v --no-coverage;'
 
@@ -133,12 +151,12 @@ alias generate-seed-sql="docker-compose exec -T fpm sed 's/DB_DATABASE=futurefue
 
 alias newseed="cd ~/Code/FutureFuel/ff/services/payments_v2/scripts/ && ./seed.sh && cdb"
 
-# Create a new branch from upstream/master. Must provide a branch name as the first argument.
+# Create a new branch from upstream/develop. Must provide a branch name as the first argument.
 newticket() {
     git remote update;
   # UNCOMMENT THESE LINES IF BRANCHING OFF rc or master instead of develop
   #  rcHash=$(git rev-parse --verify --quiet origin/rc)
-  #  
+  #
   #  if [ "${#rcHash}" -gt 0 ]; then
   #      upstreamBranch="rc"
   #  else
