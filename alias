@@ -12,6 +12,8 @@ alias lm='la | less'
 #}}}
 
 
+alias lc="fc -ln -1 | tr -d '\n' | pbcopy"
+
 # Bash Alias/RC editing
 alias ea='vim ~/.bash/alias'
 alias zrc='vim ~/.zshrc'
@@ -44,7 +46,7 @@ function tinker()
   fi
 }
 
-alias phpcs='./vendor/bin/phpcs --standard=./custom_ruleset.xml --severity=1'
+alias phpcs='./vendor/bin/phpcs --standard=./phpcs.xml --severity=1 -d memory_limit=512M'
 
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
@@ -164,4 +166,3 @@ function dc {
 function dcef {
   docker-compose exec fpm $@;
 }
-
