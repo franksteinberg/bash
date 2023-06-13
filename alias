@@ -12,10 +12,13 @@ alias lm='la | less'
 #}}}
 
 
+alias lc="fc -ln -1 | tr -d '\n' | pbcopy"
+
 # Bash Alias/RC editing
 alias ea='vim ~/.bash/alias'
+alias zrc='vim ~/.zshrc'
 alias erc='vim ~/.bashrc'
-alias sa='source ~/.bashrc && echo ".bashrc sourced. OK"'
+alias sa='source ~/.bash/alias && echo "~/bash/alias sourced. OK"'
 
 # Navigation
 alias cdh='cd ~'
@@ -28,6 +31,22 @@ alias vpnon='sudo openvpn --config ~/Documents/futurefuel-vpn-client-certificate
 
 # List remote repositories for a project
 alias rv='git remote -v'
+
+alias nah='git reset --hard && git clean -df'
+
+alias tink='docker-compose exec fpm php artisan tinker'
+
+function tinker()
+{
+  if [ -z "$1" ]
+    then
+      docker-compose exec fpm php artisan tinker
+    else
+      docker-compose exec fpm php artisan tinker --execute="dd($1);"
+  fi
+}
+
+alias phpcs='./vendor/bin/phpcs --standard=./phpcs.xml --severity=1 -d memory_limit=512M'
 
 #--------------------------------------------
 # PHPUnit & Phing commands- run in project root:
@@ -58,7 +77,14 @@ function dpamfs {
 }
 
 function dpu {
-  docker-compose exec fpm ./vendor/bin/phpunit $@;
+  if [[ $@ =~ --all ]]; then
+    ARGUMENT_STRING="${@//--all/}"
+  else
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow $@;
+    return;
+  fi
+
+  docker-compose exec fpm ./vendor/bin/phpunit $ARGUMENT_STRING;
   return;
 }
 
@@ -89,7 +115,14 @@ function puc {
 }
 
 function dpuc {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $@;
+  if [[ $@ =~ --all ]]; then
+    ARGUMENT_STRING="${@//--all/}"
+  else
+    docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --exclude-group slow $@;
+    return;
+  fi
+
+  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $ARGUMENT_STRING;
   return;
 }
 
@@ -110,6 +143,13 @@ function dpucg {
   return;
 }
 
+# Run tests in parallel
+alias test='docker-compose exec fpm php artisan test -p10 --parallel --recreate-databases --runner WrapperRunner -v --no-coverage;'
+
+# Generate a new seed.sql file
+alias generate-seed-sql="docker-compose exec -T fpm sed 's/DB_DATABASE=futurefuel/DB_DATABASE=futurefuel_fresh_seed/' .env > .env.seed && docker-compose exec -T db /usr/bin/mysql -u root --password=root -e 'drop database if exists futurefuel_fresh_seed; create database futurefuel_fresh_seed;' && docker-compose exec fpm php artisan migrate:fresh --env=seed && docker-compose exec -T db /usr/bin/mysqldump -u root --password=root futurefuel_fresh_seed > ../services/payments/src/test/resources/seed.sql"
+
+alias newseed="cd ~/Code/FutureFuel/ff/services/payments_v2/scripts/ && ./seed.sh && cdb"
 
 # Create a new branch from upstream/develop. Must provide a branch name as the first argument.
 newticket() {
@@ -128,3 +168,19 @@ newticket() {
     git push -u origin $1
 }
 
+function pa {
+  php artisan $@;
+  return;
+}
+
+function dpa {
+  docker-compose exec fpm php artisan $@;
+}
+
+function dc {
+  docker-compose $@;
+}
+
+function dcef {
+  docker-compose exec fpm $@;
+}
