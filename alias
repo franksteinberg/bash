@@ -99,12 +99,12 @@ function puf {
 }
 
 function dpuf {
-  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --filter $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --no-coverage --filter $@;
   return;
 }
 
 function dpug {
-  docker-compose exec fpm ./vendor/bin/phpunit --stop-on-failure --group $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --no-coverage --group $@;
   return;
 }
 
