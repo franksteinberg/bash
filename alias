@@ -80,11 +80,11 @@ function dpu {
   if [[ $@ =~ --all ]]; then
     ARGUMENT_STRING="${@//--all/}"
   else
-    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow $@;
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow  --no-coverage $@;
     return;
   fi
 
-  docker-compose exec fpm ./vendor/bin/phpunit $ARGUMENT_STRING;
+  docker-compose exec fpm ./vendor/bin/phpunit --no-coverage $ARGUMENT_STRING;
   return;
 }
 
