@@ -118,11 +118,11 @@ function dpuc {
   if [[ $@ =~ --all ]]; then
     ARGUMENT_STRING="${@//--all/}"
   else
-    docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --exclude-group slow $@;
+    docker-compose exec fpm ./vendor/bin/phpunit --exclude-group slow $@;
     return;
   fi
 
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit $ARGUMENT_STRING;
+  docker-compose exec fpm ./vendor/bin/phpunit $ARGUMENT_STRING;
   return;
 }
 
@@ -134,12 +134,12 @@ function pucf {
 }
 
 function dpucf {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --filter $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --filter $@;
   return;
 }
 
 function dpucg {
-  docker-compose exec fpm phpdbg -qrr ./vendor/bin/phpunit --group $@;
+  docker-compose exec fpm ./vendor/bin/phpunit --group $@;
   return;
 }
 
